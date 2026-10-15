@@ -1,0 +1,11 @@
+{
+  "chainId": 5042,
+  "rpc": "https://rpc.mainnet.arc.io",
+  "factory": "0x95ee06ec2D944B891E82CEd2F1404FBB8A36dA44",
+  "deploymentBlock": 25979622,
+  "transactionHash": "0xd3824bbd96895469e75d0e1865cfcf993a1056a95a143f8de2b58e9ce83273e1",
+  "deployer": "0x3a18f9f0E07269D2a9161A0E83745b4e8BbAdEE8",
+  "gasUsed": "2073051",
+  "gasCostNativeUsdc": "0.041461022390227803",
+  "deployedAt": "2026-10-14T20:34:02.000Z"
+}

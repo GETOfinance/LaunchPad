@@ -1,0 +1,13 @@
+{
+  "chainId": 5042,
+  "rpc": "https://rpc.mainnet.arc.io",
+  "factory": "0x4Cd7fDFf83DC1540696BdaF38840a93134336dF8",
+  "router": "0xB433a6F3c690D17E78aa3dD87eC01cdc304278a9",
+  "smokeToken": "0x0000000000000000000000000000000000000000",
+  "pair": "0x0000000000000000000000000000000000000000",
+  "usdc": "0x3600000000000000000000000000000000000000",
+  "multicall3": "0xca11bde05977b3631167028862be2a173976ca11",
+  "deploymentBlock": 0,
+  "transactionHash": null,
+  "deployedAt": null
+}

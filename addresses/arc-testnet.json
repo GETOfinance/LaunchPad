@@ -1,0 +1,13 @@
+{
+  "chainId": 5042002,
+  "rpc": "https://rpc.testnet.arc.io",
+  "factory": "0x10c9Ab23a88a17fe62687Df67895F1bC7f6ba05A",
+  "router": "0x18c9CbC1E055aBA2494Bc1d787436586EAca8456",
+  "smokeToken": "0x2bBf07A1f4F67C1e9dEEF49b64Cbed1DB59367f7",
+  "pair": "0x1F984Ada4DCC3Da04B7d844F9c960B54Df3ffe0C",
+  "usdc": "0x3600000000000000000000000000000000000000",
+  "multicall3": "0xca11bde05977b3631167028862be2a173976ca11",
+  "deploymentBlock": 67173920,
+  "transactionHash": "0x26e001a2b70ad8ce1498a1f131936c59b8b7d10eb978d8cf5fda7825811aca2e",
+  "deployedAt": "2026-10-14T10:16:00Z"
+}
