@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model FA {
+  address           String   @id
+  name              String
+  symbol            String
+  creator           String
+  decimals          Int      @default(18)
+  pool_address      String?
+  max_supply        String?
+  icon_uri          String?
+  project_uri       String?
+  mint_fee_per_unit String   @default("0")
+  created_at        DateTime @default(now())
+
+  trades     Trade[]
+  pool_stats PoolStats?
+  events     FAEvent[]
+}
+
+model Trade {
+  id                  String  @id @default(cuid())
+  transaction_hash    String
+  transaction_version String?
+
+  // Basic trade info
+  fa_address      String
+  user_address    String
+  hbar_amount     String // raw 18-decimal native USDC units
+  token_amount    String // raw 18-decimal token units
+  price_per_token String // raw native units per whole token
+  fee_amount      String @default("0")
+  log_index       Int
+
+  // Trade type
+  trade_type TradeType @default(BUY)
+
+  created_at DateTime @default(now())
+
+  fa FA @relation(fields: [fa_address], references: [address])
+
+  @@unique([transaction_hash, log_index])
+  @@index([fa_address, created_at])
+}
+
+model PoolStats {
+  fa_address           String  @id
+  hbar_reserves        String
+  token_reserves       String  @default("0")
+  total_volume         String  @default("0")
+  trade_count          Int     @default(0)
+  is_graduated         Boolean @default(false)
+  graduation_threshold String  @default("0") // retained for backwards compatibility; graduation is unsupported
+  dex_pool_addr        String? // DEX pool address after graduation (0x... 66 characters)
+
+  updated_at DateTime @updatedAt
+
+  fa FA @relation(fields: [fa_address], references: [address])
+}
+
+model FAEvent {
+  id                  String  @id @default(cuid())
+  transaction_hash    String
+  transaction_version String?
+  log_index           Int
+
+  fa_address String
+  event_type EventType
+  event_data Json
+
+  created_at DateTime @default(now())
+
+  fa FA @relation(fields: [fa_address], references: [address])
+
+  @@unique([transaction_hash, log_index])
+  @@index([fa_address, event_type])
+  @@index([transaction_hash])
+}
+
+enum TradeType {
+  BUY
+  SELL
+  MINT
+  BURN
+}
+
+enum EventType {
+  CREATE_FA
+  MINT_FA
+  BURN_FA
+  BUY_TOKENS
+  SELL_TOKENS
+  POOL_GRADUATED
+}
+
+// EVM price/volume snapshots for Arc pools
+model TokenSnapshot {
+  id            String   @id @default(cuid())
+  token         String
+  pool          String
+  priceUsd      String
+  priceHbar     String
+  hbarPriceUsd  String
+  reservesHbar  String?
+  reservesToken String?
+  blockNumber   Int
+  blockTime     DateTime
+  createdAt     DateTime @default(now())
+
+  @@index([token, createdAt])
+  @@index([pool, createdAt])
+}
+
+model IndexerState {
+  id          String   @id
+  blockNumber Int
+  updatedAt   DateTime @updatedAt
+}
